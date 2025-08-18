@@ -81,7 +81,7 @@ async function apiFetch(url, options = {}, retry = true) {
             return apiFetch(url, options, false);
         } else {
             console.warn("Refresh failed, redirecting to login...");
-            window.location.href = "/login.html";
+            window.location.href = "/index.html";
             return;
         }
     }

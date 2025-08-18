@@ -38,7 +38,6 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     try {
         const response = await apiFetch("https://notenest-odgc.onrender.com/api/v1/users/logout", {
             method: "POST",
-            credentials: "include",
             headers: { "Content-Type": "application/json" },
         });
         if (response.ok) {
@@ -76,7 +75,7 @@ async function apiFetch(url, options = {}, retry = true) {
     if (res.status === 401 && retry) {
         console.warn("Access token expired, trying refresh...");
 
-        const refreshRes = await apiFetch("https://notenest-odgc.onrender.com/api/v1/users/refresh-token", {
+        const refreshRes = await fetch("https://notenest-odgc.onrender.com/api/v1/users/refresh-token", {
             method: "POST",
             credentials: "include"
         });
@@ -107,7 +106,6 @@ noteForm.addEventListener("submit", async function (e) {
     try {
         const response = await apiFetch("https://notenest-odgc.onrender.com/api/v1/notes/create", {
             method: "POST",
-            credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ title, content }),
         });
@@ -130,7 +128,6 @@ async function loadNotes() {
     try {
         const response = await apiFetch("https://notenest-odgc.onrender.com/api/v1/notes", {
             method: "GET",
-            credentials: "include"
         });
 
         const result = await response.json();
@@ -200,13 +197,13 @@ function attachNoteActions() {
                     const res = await apiFetch(`https://notenest-odgc.onrender.com/api/v1/notes/${noteId}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
-                        credentials: "include",
                         body: JSON.stringify({ title: updatedTitle, content: updatedContent })
                     });
 
                     if (!res.ok) throw new Error("Failed to update note");
 
                     showToast("success", "Note updated!");
+                    loadNotes();
                 } catch (err) {
                     console.error(err);
                     showToast("error", "Error updating note.");
@@ -225,7 +222,6 @@ function attachNoteActions() {
             try {
                 const res = await apiFetch(`https://notenest-odgc.onrender.com/api/v1/notes/${noteId}`, {
                     method: "DELETE",
-                    credentials: "include"
                 });
 
                 if (!res.ok) throw new Error("Failed to delete note");
@@ -247,7 +243,6 @@ function attachNoteActions() {
             try {
                 const res = await apiFetch(`https://notenest-odgc.onrender.com/api/v1/notes/${noteId}/pin`, {
                     method: "PUT",
-                    credentials: "include"
                 });
 
                 if (!res.ok) throw new Error("Failed to toggle pin");
@@ -273,7 +268,6 @@ async function loadUserProfile() {
     try {
         const res = await apiFetch("https://notenest-odgc.onrender.com/api/v1/users/current-user", {
             method: "GET",
-            credentials: "include"
         });
 
         if (!res.ok) throw new Error("Failed to fetch user");
