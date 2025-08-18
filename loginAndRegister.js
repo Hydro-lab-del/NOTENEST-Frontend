@@ -61,64 +61,6 @@ window.addEventListener('resize', toggleLoginMsg);
 
 
 
-// document.getElementById("registerForm").addEventListener('submit', async (e) => {
-//     e.preventDefault();
-
-//     const form = e.target;
-//     const username = form.username.value.trim();
-//     const email = form.email.value.trim();
-//     const password = form.password.value.trim();
-
-//     const res = await fetch("/api/v1/users/register", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({ username, email, password })
-//     });
-//     const data = await res.json();
-//     if (res.ok) {
-//         alert("User registered successfully");
-//         window.location.href = '/dashboard.html'
-//     }
-//     else {
-//         alert(data.message || "registration failed!")
-//     }
-// });
-
-// document.getElementById("loginForm").addEventListener("submit", async (e) => {
-//     e.preventDefault();
-
-//     const form = e.target;
-//     const email = form.email.value.trim();
-//     const password = form.password.value.trim();
-
-//     try {
-//         const res = await fetch("/api/v1/users/login", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json"
-//             },
-//             credentials: "include",
-//             body: JSON.stringify({ email, password })
-//         });
-
-//         const data = await res.json();
-
-//         if (res.ok) {
-//             setTimeout(() => {
-//                 window.location.href = '/dashboard.html';
-//             }, 1000);
-//         } else {
-//             alert( "Login failed!");
-//         }
-//     } catch (error) {
-//         alert("An error occurred. Please try again later.");
-//         console.error("Login error:", error);
-//     }
-// });
-
-// Helper: call API with auto-refresh
 async function apiFetch(url, options = {}, retry = true) {
     const res = await fetch(url, {
         ...options,
@@ -129,7 +71,7 @@ async function apiFetch(url, options = {}, retry = true) {
     if (res.status === 401 && retry) {
         console.warn("Access token expired, trying refresh...");
         
-        const refreshRes = await fetch("/api/v1/users/refresh-token", {
+        const refreshRes = await fetch("https://notenest-odgc.onrender.com/api/v1/users/refresh-token", {
             method: "POST",
             credentials: "include"
         });
@@ -155,7 +97,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     const email = form.email.value.trim();
     const password = form.password.value.trim();
 
-    const res = await fetch("/api/v1/users/register", {
+    const res = await fetch("https://notenest-odgc.onrender.com/api/v1/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -179,7 +121,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const email = form.email.value.trim();
     const password = form.password.value.trim();
 
-    const res = await fetch("/api/v1/users/login", {
+    const res = await fetch("https://notenest-odgc.onrender.com/api/v1/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -195,7 +137,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
 // Example dashboard call with auto-refresh
 async function loadNotes() {
-    const res = await apiFetch("/api/v1/notes");
+    const res = await apiFetch("https://notenest-odgc.onrender.com/api/v1/notes");
     if (res && res.ok) {
         const notes = await res.json();
         console.log(notes);
