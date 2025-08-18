@@ -36,7 +36,7 @@ window.addEventListener("click", function (e) {
 // logout
 document.getElementById("logoutBtn").addEventListener("click", async () => {
     try {
-        const response = await apiFetch("/api/v1/users/logout", {
+        const response = await apiFetch("https://notenest-odgc.onrender.com/api/v1/users/logout", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -76,7 +76,7 @@ async function apiFetch(url, options = {}, retry = true) {
     if (res.status === 401 && retry) {
         console.warn("Access token expired, trying refresh...");
 
-        const refreshRes = await apiFetch("/api/v1/users/refresh-token", {
+        const refreshRes = await apiFetch("https://notenest-odgc.onrender.com/api/v1/users/refresh-token", {
             method: "POST",
             credentials: "include"
         });
@@ -105,7 +105,7 @@ noteForm.addEventListener("submit", async function (e) {
     }
 
     try {
-        const response = await apiFetch("/api/v1/notes/create", {
+        const response = await apiFetch("https://notenest-odgc.onrender.com/api/v1/notes/create", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -128,7 +128,7 @@ noteForm.addEventListener("submit", async function (e) {
 
 async function loadNotes() {
     try {
-        const response = await apiFetch("/api/v1/notes", {
+        const response = await apiFetch("https://notenest-odgc.onrender.com/api/v1/notes", {
             method: "GET",
             credentials: "include"
         });
@@ -197,7 +197,7 @@ function attachNoteActions() {
                 const updatedTitle = titleEl.textContent.trim();
 
                 try {
-                    const res = await apiFetch(`/api/v1/notes/${noteId}`, {
+                    const res = await apiFetch(`https://notenest-odgc.onrender.com/api/v1/notes/${noteId}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         credentials: "include",
@@ -223,7 +223,7 @@ function attachNoteActions() {
             if (!confirm("Are you sure you want to delete this note?")) return;
 
             try {
-                const res = await apiFetch(`/api/v1/notes/${noteId}`, {
+                const res = await apiFetch(`https://notenest-odgc.onrender.com/api/v1/notes/${noteId}`, {
                     method: "DELETE",
                     credentials: "include"
                 });
@@ -245,7 +245,7 @@ function attachNoteActions() {
             const noteId = note.dataset.id;
 
             try {
-                const res = await apiFetch(`/api/v1/notes/${noteId}/pin`, {
+                const res = await apiFetch(`https://notenest-odgc.onrender.com/api/v1/notes/${noteId}/pin`, {
                     method: "PUT",
                     credentials: "include"
                 });
@@ -271,7 +271,7 @@ function getInitials(name) {
 
 async function loadUserProfile() {
     try {
-        const res = await apiFetch("/api/v1/users/current-user", {
+        const res = await apiFetch("https://notenest-odgc.onrender.com/api/v1/users/current-user", {
             method: "GET",
             credentials: "include"
         });
