@@ -12,7 +12,6 @@ if (showLogin && showRegister) {
         registerContainer.style.display = 'none';
         loginContainer.style.display = 'flex';
 
-        // Add temporary styling class if needed
         loginContainer.classList.add('login-themed');
 
         // Inject heading only if it doesn't already exist
